@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser');
 const cache = require('memory-cache');
 const passport = require('passport');
@@ -20,10 +21,11 @@ const getErrorAsObject = errors =>
 const app = express()
   .use(bodyParser.urlencoded({ extended: true }))
   .use(
-    session({
+    cookieSession({
       secret: 'secretKeyThatShouldBeInEnvironmentConfig',
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: true,  
+      sameSite: true, 
     })
   )
   .use(passport.initialize())
@@ -31,7 +33,7 @@ const app = express()
 
 // Requests that do not require authentication
 app
-  .get('/messages', (_, res) => res.send({ messages: getMessages() }))
+  .get('/messages', (_, res) => res.send({ messages: dataInterface.getMessages() }))
   .post('/login', (req, res, next) => {
     passport.authenticate('local', (error, user) => {
       if (error) {
