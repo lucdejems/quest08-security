@@ -123,7 +123,7 @@ class App extends Component {
         <Box pad="medium">
           <Heading level="3">Log in</Heading>
           <Form onSubmit={this.logIn}>
-            <FormField name="username" label="Username:" />
+            <FormField name="username" label="Username:" test={test} />
             <FormField name="password" type="password" label="Password:" />
             <Button type="submit" primary label="Submit" margin="medium" />
           </Form>
